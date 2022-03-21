@@ -24,8 +24,8 @@ const Home = () => {
             {socialImgandLink.map(item =>{
               return (
                 <a href={item.lastName} target='_blank'>
-                <img src={item.firstName} className="icon h-[30px]" />
-            </a>
+                  <img src={item.firstName} className="icon h-[30px]" />
+                </a>
            
 
               )

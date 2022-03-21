@@ -20,6 +20,7 @@ import Addinputfield from './dashboard/homecrudpage/AddInputfield';
 import { library } from '@fortawesome/fontawesome-svg-core' //allows later to just use icon name to render-them
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
+import Contact from './pages/contactPage/Contact';
 
 library.add(fas)
 
@@ -31,7 +32,7 @@ const App = () => {
   return (
 <>
 
-<div className='overflow-y-hidden' >
+{/* <div className='overflow-y-hidden' > */}
 <Routes>
     <Route path='/' element={<Navbar/>}>
     <Route index element={<Home/>} />
@@ -41,6 +42,7 @@ const App = () => {
     <Route path='/article/:id' element={<ArticleDetail/>} />
     <Route path='/video' element={<VidCompon/>}/>
     <Route path='/watch/:id' element={<WatchVideo />}/>
+    <Route path='/contact' element={<Contact/>}/>
 
   </Route>
 
@@ -55,7 +57,7 @@ const App = () => {
     <Route path='videos/editvideo/:id' element={<Editvideo/>}/>
   </Route>
 </Routes>
-  </div>
+  {/* </div> */}
 </>
   )
  

@@ -52,7 +52,7 @@ const [bioImgUrl, setImgUrl] = useState('');
   
   return (
     <>
-    <div className="container grid grid-cols-1  max-w-[80%] lg:max-w-[60%] m-[20px_auto] gap-[10px]">
+    <div className="container grid grid-cols-1  max-w-[80%] lg:max-w-[60%] p-[30px_0px] m-[0px_auto] gap-[10px]">
         <input className='p-[10px] text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px] outline-none' type="text" placeholder='title' onChange={(e)=>{settitle(e.target.value)}}/>
         <input className='p-[10px] text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px] outline-none' type="text" placeholder='shortbio' onChange={(e)=>{setshortBio(e.target.value)}} />
         <input className='p-[10px] text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px] outline-none' type="text" placeholder='img_url' onChange={(e)=>{setImgUrl(e.target.value)}}/>
@@ -81,19 +81,30 @@ const [bioImgUrl, setImgUrl] = useState('');
           </div>
         );
       })}
-       {home_data.map((c)=>{
-         return<>
-                <div className="container">
-                  <img src={c.imgurl} />
-                  {c.socialImgandLink.map((i)=>{
-                    return <img src={i} />
-                  })}
-                  <h3>{c.title}</h3>
-                  <p>{c.description}</p>
-                </div>
-                <button onClick={()=>submitPost(c._id)}>Submit post</button>
-              </>
-       })}
+       {home_data.map(({title, description, imgurl,socialImgandLink,_id})=>{
+                return(
+                  <div className='m-[0px_auto] p-[30px]'>
+                    <div className="imgcard bg-white shadow-[1px_1px_5px_0px_rgba(1,1,1,0.05)] flex gap-2 flex-col items-center rounded-2xl p-8 mb-16 w-full">
+                     <div className="h_img_wrapper h-[170px] w-[170px] inline-block relative rounded-[50%] ">
+                    <img className=" rounded-[50%] w-30px" src={imgurl} alt={title}  />
+                  </div>
+                  <p className='font-semibold'>{title}</p>
+                  <div className="socil_images flex gap-2">
+                  {socialImgandLink.map(item =>{
+                          return (
+                            <a href={item.lastName} target='_blank'>
+                              <img src={item.firstName} className="icon h-[30px]" />
+                            </a>
+                          )                        
+                        })}                     
+                  </div>               
+              </div>
+              <button className='  w-[140px] bg-[#3de5f1] p-[5px_10px] rounded-full' onClick={()=>submitPost(_id)}>Edit Info</button>       
+                  </div>
+                  
+                )
+              })}
+      
         </div>
     </>
   )

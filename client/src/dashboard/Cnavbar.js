@@ -26,7 +26,7 @@ const Cnavbar = ({ to, title }) => {
       icon:"book"
     },
     {
-      link: "/contact",
+      link: "contact",
       name: "যোগাযোগ",
       icon:"envelope"
     },
