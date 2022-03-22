@@ -12,7 +12,7 @@ console.log(book_data)
     useEffect(()=>{
       dispatch(fetch_book_datas())
     },[])
-    const filtarti = book_data.filter((fil)=> fil.book_title === slag)
+    const filtarti = book_data.filter((fil)=> fil.book_slug === slag)
     console.log("filter",filtarti)
 
   return (

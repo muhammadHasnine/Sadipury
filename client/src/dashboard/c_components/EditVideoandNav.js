@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetch_video_datas } from '../../redux/actions/Actions'
 import NavVid from '../../pages/videoPage/NavVid'
 import EditvideoCard from './EditvieoCard'
-
+import { useSearch } from '../../hooks/useSearch'
 
 
 const EditVideoandNav = () => {
   const videos_data = useSelector((state)=>state.video_reducers.videos)
   const dispatch = useDispatch();
   const [all, setall] = useState([])
- 
+  const [search, setsearch] = useState(null)
+  const num = [1,2];
 
   console.log("video",videos_data)
   
@@ -46,10 +47,16 @@ const hamberger = () =>{
       <p>ক্যাটাগরি</p><p>&#x25BC;</p>
       </button>
       <div className={click ? "vid_nav_active md: block" : "vid_nav hidden md:block" }>
+      <input
+            type="search"
+            placeholder="Enter name to be searched"
+            className="searchbar p-[3px] rounded-full  text-[red]"
+            onChange={(e) =>setsearch(e.target.value)}
+          />
           <NavVid filterfunction = {handelarticale}/>
        </div>
        <div className='video_img_body p-[20px] grid gap-[20px] md:grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))]'>
-          {all.map((c)=>{
+          {useSearch(all,search,num).map((c)=>{
             return  <EditvideoCard title={c.title} imgurl={c.imgurl} id = {c._id} category={c.
               category
               }/>})}    
