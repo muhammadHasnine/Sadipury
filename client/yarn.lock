@@ -3409,6 +3409,11 @@
     "isobject" "^3.0.0"
     "static-extend" "^0.1.1"
 
+"classnames@^2.3.1":
+  "integrity" "sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA=="
+  "resolved" "https://registry.npmjs.org/classnames/-/classnames-2.3.1.tgz"
+  "version" "2.3.1"
+
 "clean-css@^5.2.2":
   "integrity" "sha512-nKseG8wCzEuji/4yrgM/5cthL9oTDc5UOQyFMvW/Q53oP6gLH690o1NbuTh6Y18nujr7BxlsFuS7gXLnLzKJGg=="
   "resolved" "https://registry.npmjs.org/clean-css/-/clean-css-5.2.4.tgz"
@@ -5309,6 +5314,11 @@
   "integrity" "sha1-3BXKHGcjh8p2vTesCjlbogQqLCg="
   "resolved" "https://registry.npmjs.org/get-value/-/get-value-2.0.6.tgz"
   "version" "2.0.6"
+
+"get-video-id@^3.5.3":
+  "integrity" "sha512-YU+v0a0pI45U7TrzDUPsXGV4THacPPviHsAlWTjD0CsVc1uolpybFE8gYhbye0MFyFoPW+yIYGrqu7bF07Q6fw=="
+  "resolved" "https://registry.npmjs.org/get-video-id/-/get-video-id-3.5.3.tgz"
+  "version" "3.5.3"
 
 "glob-parent@^3.1.0":
   "integrity" "sha1-nmr2KZ2NO9K9QEMIMr0RPfkGxa4="
@@ -8482,7 +8492,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@^15.8.1":
+"prop-types@^15.6.1", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -8704,6 +8714,13 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
+"react-paginate@^8.1.2":
+  "integrity" "sha512-buBkBiN9J8gvZYwYNixlTGRmWOC5C6+tH2XHTN8B5qGkRPOSYFkAqxhWUnxSVAeLKxpVZGPya/gOL2eJQNZGvg=="
+  "resolved" "https://registry.npmjs.org/react-paginate/-/react-paginate-8.1.2.tgz"
+  "version" "8.1.2"
+  dependencies:
+    "prop-types" "^15.6.1"
+
 "react-player@^2.9.0":
   "integrity" "sha512-jNUkTfMmUhwPPAktAdIqiBcVUKsFKrVGH6Ocutj6535CNfM91yrvWxHg6fvIX8Y/fjYUPoejddwh7qboNV9vGA=="
   "resolved" "https://registry.npmjs.org/react-player/-/react-player-2.9.0.tgz"
@@ -8812,7 +8829,7 @@
     "video.js" "^7.4.1"
     "webpack" "^4.26.1"
 
-"react@*", "react@^16.8.3 || ^17", "react@^17.0.2", "react@>= 16", "react@>=16.6.0", "react@>=16.8", "react@>=16.x", "react@17.0.2":
+"react@*", "react@^16 || ^17", "react@^16.8.3 || ^17", "react@^17.0.2", "react@>= 16", "react@>=16.6.0", "react@>=16.8", "react@>=16.x", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"

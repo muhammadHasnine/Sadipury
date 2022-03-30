@@ -12,20 +12,12 @@ const videoSchema = new mongoose.Schema({
         type:String,
         require:true
     },
-    description:{
-        type:String,
-        require:true
-    },
     category:[
         {
         type:String,
         require:true
         }
-    ],
-    date:{
-        type:String,
-        require:true
-    }
+    ]
 })
 const data3 = mongoose.model("videoData",videoSchema);
 export default data3; 

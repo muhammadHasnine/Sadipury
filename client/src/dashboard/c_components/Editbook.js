@@ -8,6 +8,7 @@ import axios from 'axios'
 const Editbook = () => {
     const {id} = useParams();
     const [title, settitle] = useState('')
+    console.log("title",title)
     const [author, setauthor] = useState('')
     const [translator, settranslator] = useState('')
     const [editor, seteditor] = useState('')
@@ -19,6 +20,7 @@ const Editbook = () => {
     const [link, setlink] = useState('')
     const [slug, setslug] = useState('')
     const [description, setdescription] = useState('')
+    const [Newdata, setNewdata] = useState([])
     const book_data = useSelector((state)=>state.book_reducers.books);
     const catag = useSelector((state)=>state.category1_reducers.category1)
     const catag2 = useSelector((state)=>state.category2_reducers.category2)
@@ -27,28 +29,57 @@ const Editbook = () => {
         dispatch(fetch_book_datas())
       },[]) 
     console.log(book_data)
-    const newdata = book_data.filter((c)=>c._id === id)
-    console.log("this is newdata",newdata)
+    useEffect(()=>{
+      const newdata = book_data.filter((c)=>c._id === id)
+      setNewdata(newdata)
+      const fil = () =>{
+        if(newdata[0]?.book_title){
+          settitle(newdata[0].book_title)
+        }if(newdata[0]?.book_author){
+          setauthor(newdata[0].book_author)
+        }if(newdata[0]?.book_translator){
+          settranslator(newdata[0].book_translator)
+        }if(newdata[0]?.book_publication){
+          setpublication(newdata[0].book_publication)
+        }if(newdata[0]?.book_editor){
+          seteditor(newdata[0].book_editor)
+        }if(newdata[0]?.book_imgurl){
+          setimgurl(newdata[0].book_imgurl)
+        }if(newdata[0]?.book_size){
+          setsize(newdata[0].book_size)
+        }if(newdata[0]?.book_page){
+          setpage(newdata[0].book_page)
+        }if(newdata[0]?.book_volume){
+          setvolume(newdata[0].book_volume)
+        }if(newdata[0]?.book_description){
+          setdescription(newdata[0].book_description)
+        }
+      }
+      fil()
+    },[book_data])
+   
+    console.log("this is newdata",Newdata)
 
 const update = (id) =>{
   const data ={
-            title,
-            author,
-            translator,
-            editor,
-            publication,
-            imgurl,
-            page,
-            size,
+            ti:title,
+            aut:author,
+            tra:translator,
+            edi:editor,
+            pub:publication,
+            img:imgurl,
+            pa:page,
+            si:size,
             cat:{
               cat1:catag,
               cat2:catag2
             },
-            volume,
-            link,
-            slug,
-            description   
+            vo:volume,
+            de:description, 
+            link:link,
+            id:id  
   }
+  console.log("all book data",data)
   axios.put("/api/editbook",data)
   alert("Updated")
 }
@@ -56,7 +87,7 @@ const update = (id) =>{
   return (
     <>
       {
-        newdata.map((d)=>{
+        Newdata.map((d)=>{
           return (
                   <div className="container w-[90%]  m-[20px_auto] ">
                       <div className="book_container grid grid-cols-1 md:grid-cols-2 bg-white">
@@ -93,22 +124,22 @@ const update = (id) =>{
             
           <InputArray2/>
           </div>
-          <div className="upload_book grid grid-cols-2 max-w-[80%] m-[20px_auto] gap-y-[5px] gap-x-[8px]">
-            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" placeholder='Book Title' onChange={(e)=>settitle(e.target.value)} />
-            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" placeholder='Book Author' onChange={(e)=>setauthor(e.target.value)} /> 
-            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" placeholder='Book Translator' onChange={(e)=>settranslator(e.target.value)} /> 
-            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" placeholder='Book Publication' onChange={(e)=>setpublication(e.target.value)} />
-            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" placeholder='Book Editor' onChange={(e)=>seteditor(e.target.value)} />
-            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" placeholder='Book Imgurl' onChange={(e)=>setimgurl(e.target.value)} />
-            <input className='p-[10px] row-span-2 text-[25px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" placeholder='Book size' onChange={(e)=>setsize(e.target.value)} />
-            <input className='p-[10px]   text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" placeholder='Book Page' onChange={(e)=>setpage(e.target.value)} />
-            <input className='p-[10px]  text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" placeholder='Book volume' onChange={(e)=>setvolume(e.target.value)} />
-            <textarea className='p-[10px] text-[15px] font-norma col-span-2 h-[130px] md:h-[180px] rounded-[5px] border-[1px] border-[#bbbbbb] m-[8px_0px]' type="text" placeholder='Book Description' onChange={(e)=>setdescription(e.target.value)} />
-          </div>
-          <div className="butto m-[10px_auto] w-[30%] md:w-[20%] ">
+          {/* <div className="upload_book grid grid-cols-2 max-w-[80%] m-[20px_auto] gap-y-[5px] gap-x-[8px]">
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={title} placeholder='Book Title' onChange={(e)=>settitle(e.target.value)} />
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={author}  placeholder='Book Author' onChange={(e)=>setauthor(e.target.value)} /> 
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={translator} placeholder='Book Translator' onChange={(e)=>settranslator(e.target.value)} /> 
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={publication} placeholder='Book Publication' onChange={(e)=>setpublication(e.target.value)} />
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={editor} placeholder='Book Editor' onChange={(e)=>seteditor(e.target.value)} />
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={imgurl} placeholder='Book Imgurl' onChange={(e)=>setimgurl(e.target.value)} />
+            <input className='p-[10px] row-span-2 text-[25px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" value={size} placeholder='Book size' onChange={(e)=>setsize(e.target.value)} />
+            <input className='p-[10px]   text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" value={page}  placeholder='Book Page' onChange={(e)=>setpage(e.target.value)} />
+            <input className='p-[10px]  text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" value={volume} placeholder='Book volume' onChange={(e)=>setvolume(e.target.value)} />
+            <textarea className='p-[10px] text-[15px] font-norma col-span-2 h-[130px] md:h-[180px] rounded-[5px] border-[1px] border-[#bbbbbb] m-[8px_0px]' type="text" value={description}  placeholder='Book Description' onChange={(e)=>setdescription(e.target.value)} />
+          </div> */}
+          {/* <div className="butto m-[10px_auto] w-[30%] md:w-[20%] ">
           <button className='w-[100%]  p-[10px] bg-[#3388f7] rounded-[10px] text-[#ffffff] font-medium hover:bg-[#ffffff] hover:text-[#3388f7] hover:border-[1px] hover:border-[#3388f7] mb-5' onClick={()=>update(d._id)}>Update</button>
-        </div>         
-    </div>
+        </div>          */}
+                </div>
             // {/* <div>
             //   <div className="arti_container">
             //     <div className="arti_imge">
@@ -148,7 +179,24 @@ const update = (id) =>{
            
           )
         })
-      }    
+      }  
+      <div className='className="container w-[90%]  m-[20px_auto] "'>
+<div className="upload_book grid grid-cols-2 max-w-[80%] m-[20px_auto] gap-y-[5px] gap-x-[8px]">
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={title} placeholder='Book Title' onChange={(e)=>settitle(e.target.value)} />
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={author}  placeholder='Book Author' onChange={(e)=>setauthor(e.target.value)} /> 
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={translator} placeholder='Book Translator' onChange={(e)=>settranslator(e.target.value)} /> 
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={publication} placeholder='Book Publication' onChange={(e)=>setpublication(e.target.value)} />
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={editor} placeholder='Book Editor' onChange={(e)=>seteditor(e.target.value)} />
+            <input className='p-[10px] col-span-2 text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="text" value={imgurl} placeholder='Book Imgurl' onChange={(e)=>setimgurl(e.target.value)} />
+            <input className='p-[10px] row-span-2 text-[25px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" value={size} placeholder='Book size' onChange={(e)=>setsize(e.target.value)} />
+            <input className='p-[10px]   text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" value={page}  placeholder='Book Page' onChange={(e)=>setpage(e.target.value)} />
+            <input className='p-[10px]  text-[15px] font-normal border-[1px] border-[#bbbbbb] rounded-[5px] m-[8px_0px]' type="number" value={volume} placeholder='Book volume' onChange={(e)=>setvolume(e.target.value)} />
+            <textarea className='p-[10px] text-[15px] font-norma col-span-2 h-[130px] md:h-[180px] rounded-[5px] border-[1px] border-[#bbbbbb] m-[8px_0px]' type="text" value={description}  placeholder='Book Description' onChange={(e)=>setdescription(e.target.value)} />
+          </div> 
+           <div className="butto m-[10px_auto] w-[30%] md:w-[20%] ">
+          <button className='w-[100%]  p-[10px] bg-[#3388f7] rounded-[10px] text-[#ffffff] font-medium hover:bg-[#ffffff] hover:text-[#3388f7] hover:border-[1px] hover:border-[#3388f7] mb-5' onClick={()=>update(id)}>Update</button>
+        </div>         
+      </div>
     </>
   )
 }

@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { fetch_video_datas } from '../../redux/actions/Actions'
 import InputArray from '../../dashboard/c_components/InputArray'
 import axios from 'axios'
+import getVideoId from 'get-video-id';
+
 
 const Editvideo = () => {
   const currentDate = new Date();
@@ -14,27 +16,56 @@ const Editvideo = () => {
   const videos_data = useSelector((state)=>state.video_reducers.videos);
   const catag = useSelector((state)=>state.category1_reducers.category1)
   const [title, settitle] = useState('')
-  const [desc, setdesc] = useState('')
-  const [img, setimg] = useState('')
-  const [link, setlink] = useState('')
+  const [url, seturl] = useState('')
+  console.log("url",url)
+  const [imgurl, setimgurl] = useState('')
   useEffect(()=>{
     dispatch(fetch_video_datas())
   },[]) 
+
+
+  async function getvideo (){
+
+    // const channeId = 'UCbMys3ID_1S8D1mZuYkoG2A'
+
+    return await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2C%20contentDetails%2Cstatistics&id=${getVideoId(url).id}&key=AIzaSyCEbpp-JTqX-2xe7alvbySKFX06Q4aZmU8`).then(data => data.json()).then(list => list.items);
+
+}
+
+const [videoData, setvideoData] = useState([])
+  
+console.log('vidocard',videoData)
+useEffect(()=>{
+    getvideo().then(data => {setvideoData(transformData(data))}).catch();
+
+  },[url])
+
+
+
   console.log(videos_data)
   const newdata = videos_data.filter((c)=>c._id === id)
   console.log("this is newdata",newdata)
   const update = (id) =>{
     const data ={
       ti:title,
-      description:desc,
-      link:link,
-      img:img,
+      url:url,
+      img:imgurl,
       id:id,
       cat:catag,
-      date
     }
+    console.log("upload data =>",data)
     axios.put("/api/editvideo",data)
     alert("Updated")
+  }
+  const transformData =(data)=>{
+    return data.map((item)=>{
+  
+      settitle(item.snippet.title)
+      setimgurl(item.snippet.thumbnails.standard.url)
+      console.log(title)
+      // return item.snippet.title
+      return item
+    })
   }
   
   return (
@@ -55,20 +86,17 @@ const Editvideo = () => {
                           })}
                         </div>
                       <div className="title_desc">
-                          <p className='text-[25px] font-semibold'>{d.title}</p>
-                          <p className='font-medium'>{d.author}</p>
-                          <p className='text-[18px]'>{d.date}</p>
-                          <p className='mt-[10px]'>{d.description}</p>
+                          <p className='text-[25px] font-semibold'>{d.title}</p>    
                       </div>
                     </div>
                   </div>
                 <div className="inputfrom mt-[50px] pb-[30px]">
                     <InputArray/>
                     <div className="inputs grid grid-cols-1 gap-3">
-                        <input className='p-[6px] rounded border-[1px] border-[gray] outline-none' type="text" placeholder='Article Title' onChange={(e)=>settitle(e.target.value)}/>
-                        <input className='p-[6px] rounded border-[1px] border-[gray] outline-none' type="text" placeholder='Author Name' onChange={(e)=>setlink(e.target.value)}/>
-                        <input className='p-[6px] rounded border-[1px] border-[gray] outline-none' type="text" placeholder='Article Image url' onChange={(e)=>setimg(e.target.value)}/>
-                        <textarea className='p-[6px] rounded border-[1px] border-[gray] outline-none resize-y max-h-[300px] min-h-[200px]  ' type="text" placeholder='Description' onChange={(e)=>setdesc(e.target.value)} /> 
+                        <input className='p-[6px] rounded border-[1px] border-[gray] outline-none' type="text" placeholder='Article Title' onChange={(e)=>seturl(e.target.value)}/>
+                       
+                        
+                       
                     </div> 
                     <div className="btn w-[80px] m-[20px_auto]">
                         <button className='p-[10px_20px] bg-[#3888ff] text-white rounded-xl font-medium ' onClick={()=>update(d._id)}>Update</button>
@@ -78,7 +106,9 @@ const Editvideo = () => {
             </>
           )
         })
-      }    
+      }   
+      <p>{title}</p> 
+      <img src={imgurl} />
     </div>
   )
 }

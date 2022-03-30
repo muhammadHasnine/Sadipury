@@ -8,7 +8,9 @@ import { useSearch } from '../../hooks/useSearch'
 const VidCompon = () => {
   const dispatch = useDispatch()
   const videos_data = useSelector((state)=>state.video_reducers.videos)
+  console.log("videos_data",videos_data)
   const [all, setall] = useState([])
+  console.log("all",all)
   const [search, setsearch] = useState(null)
   const num = [1,2];
 
@@ -58,8 +60,7 @@ const vid_nav_ham =()=>{
         <div className='video_img_body p-[20px] grid gap-[20px] md:grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))]'>
           {useSearch(all,search,num).map((c)=>{
             return  <VideoimagCard title={c.title} imgurl={c.imgurl} id = {c._id} category={c.
-              category
-              }/>})}    
+              category} url = {c.url}/>})}    
         </div>
    </div>
    </>

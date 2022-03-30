@@ -1,4 +1,6 @@
 import express from 'express';
+import youtubeInfo from 'youtube-info';
+import getVideoId from 'get-video-id';
 import articleSchema from '../models/articleSchema.mjs'
 import videoSchema from '../models/videoSchema.mjs';
 import bookSchema from '../models/bookSchema.mjs'
@@ -131,13 +133,16 @@ router.post('/postvideo',async(req,res)=>{
     const tit = req.body.title
     const url = req.body.url
     const imgurl = req.body.img
-    const desc = req.body.description
     const cat = req.body.cat
+
+   
+
+
+
     const data = new videoSchema({
            title:tit,
            imgurl:imgurl,
            url:url,
-           description:desc,
            category:cat
     })
    
@@ -152,18 +157,15 @@ router.post('/postvideo',async(req,res)=>{
 router.put('/editvideo',async(req,res)=>{
        const title = req.body.ti
        const imag  = req.body.img
-       const desc  = req.body.description
        const id    = req.body.id
-       const link   = req.body.link
+       const url   = req.body.url
        const category = req.body.cat
-       const date = req.body.date
        try {
               await videoSchema.findByIdAndUpdate(id,{
                      $set:{
                             title:title, 
                             imgurl:imag,
-                            url:link,
-                            description:desc,
+                            url:url,
                             category:category
                      }
               })
@@ -235,6 +237,13 @@ router.post('/postbook',async(req,res)=>{
 router.put('/editbook',async(req,res)=>{
     const title = req.body.ti
     const auth  = req.body.aut
+    const trans = req.body.tra
+    const edit = req.body.edi
+    const publ =req.body.pub
+    const pag = req.body.pa
+    const siz = req.body.si
+    const vol = req.body.vo
+    const des = req.body.de
     const imag  = req.body.img
     const link  = req.body.link
     const id  = req.body.id
@@ -246,7 +255,14 @@ router.put('/editbook',async(req,res)=>{
                          book_author:auth, 
                          book_imgurl:imag,
                          download_link:link,
-                         book_category:category
+                         book_category:category,
+                         book_translator:trans,
+                         book_editor:edit,
+                         book_publication:publ,
+                         book_page:pag,
+                         book_size:siz,
+                         book_volume:vol,
+                         book_description:des
                   }
            })
     } catch (error) {
